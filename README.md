@@ -71,19 +71,34 @@ streamlit run app.py
 **6. Open browser at** `http://localhost:8501`
 
 ## 📁 Project Structure
-
+FootySense/
+├── 1. Data Collection and SQL/
+│   ├── fetch_teams.py
+│   ├── fetch_scorers.py
+│   ├── database.py
+│   └── analyze_data.py
+├── 2. Machine Learning Model/
+│   ├── epl_final.csv
+│   ├── prepare_ml_data.py
+│   └── train_model.py
+├── main.py          # FastAPI backend
+├── app.py           # Streamlit frontend
+├── footysense.db    # SQLite database
+├── model.pkl        # Trained Random Forest
+└── requirements.txt
 
 
 ## 📬 About the Developer
-* **Syed Shahbaz Jilani* **
+* **Syed Shahbaz JiLani**
+  
+*  **Majan University College (Oman)**
 
-* **University: Majan University College (Oman)* **
 
-* **Degree: BSc (Hons) Software Engineering* **
+* **Degree: BSc (Hons) Software Engineering**
 
-* **LinkedIn: linkedin.com/in/syed-shahbaz-jilani* **
+* **LinkedIn: https://www.linkedin.com/in/syed-shahbaz-jilani-816052253/**
 
-* **GitHub: github.com/Syed-Shahbaz27* **
+* **GitHub: github.com/Syed-Shahbaz27**
 
 
 
