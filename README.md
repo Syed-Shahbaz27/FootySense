@@ -1,5 +1,7 @@
 # 📊⚽ FootySense: Premier League Match Predictor
 
+Football has been one of my primary interests growing up, I've loved watching live premier league matches, playing myself in an acadamey level, keeping this in mind  is why i made FootySense.
+
 A full-stack Machine Learning application that leverages historical data to predict the outcomes of English Premier League matches.
 
 ## 🌟 Highlights
@@ -11,32 +13,64 @@ A full-stack Machine Learning application that leverages historical data to pred
 ## 🚀 Live Demo
 [Click here to view the live app](LINK_WILL_BE_ADDED_AFTER_DEPLOYMENT)
 
+## 📸 Preview (will be added later along with deploynment)
+
+
 ## 🧠 The Problem vs. The Solution
 ### The Problem
-Football prediction is notoriously difficult due to the high variance of the sport. Many entry-level models suffer from **Data Leakage** (using end-of-game stats like "Total Yellow Cards" to predict the "Result"), which leads to artificially high accuracy that fails in real-world scenarios.
+Football prediction is notably difficult due to the high variance of the sport. Many sport based ML models suffer from **Data Leakage** (using end-of-game stats like "Total Yellow Cards", "Goals Scored" to predict the "Result"), which leads to artificially high accuracy (99%) that fails in real-world use cases.
 
 ### The Solution
-FootySense uses a **Random Forest Classifier** trained on pre-match features. The system calculates rolling averages for key metrics—such as **Shots on Target** and **Corners**—to provide realistic probability distributions for a Home Win, Away Win, or Draw.
+FootySense uses a **Random Forest Classifier** trained on pre-match features. FootySense uses historical averages of shots, shots on target, and corners. The API calculates team averages at inference time so users simply select two teams and receive a realistic prediction for 3 outcomes as stated: a Home Win, Away Win, or Draw.
 
 ## 🛠️ Tech Stack
 | Category | Technology |
 | :--- | :--- |
 | **Language** | Python |
 | **Backend** | FastAPI, Uvicorn |
-| **Database** | SQLite3 |
+| **Database** | SQLite |
 | **ML Model** | Scikit-Learn (Random Forest) |
 | **Frontend** | Streamlit |
 | **Data Handling** | Pandas, Requests |
-| **Deployment** | Render / GitHub |
+| **Deployment** | Render, Github |
 
 ## 📊 Model Performance
-* **Accuracy:** ~52% - 56% 
-* **Context:** While it might seem low, industry standards for sports betting and prediction models typically hover between 50-60%.
+* **Accuracy:** ~52%  
+* **Context:** While it might seem low, industry standards for sports betting and prediction models typically range between 50-60%.
+* **Features**: HomeShots, AwayShots, ShotsOnTarget, Corners
 * **Data Source:** Live data via the [Football-Data.org](https://www.football-data.org/) API and historical Kaggle datasets.
 
-## ⚙️ Installation & Running Locally
+## 🔧 Run Locally
 
-### 1. Clone the repo
+**1. Clone the repo**
 ```bash
-git clone [https://github.com/Syed-Shahbaz27/FootySense.git](https://github.com/Syed-Shahbaz27/FootySense.git)
+git clone https://github.com/Syed-Shahbaz27/FootySense.git
 cd FootySense
+```
+
+**2. Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+**3. Set up environment variables**
+
+Create `.env` file in root:
+FOOTBALL_API_KEY=your_api_key_here
+
+**4. Run FastAPI backend**
+```bash
+uvicorn main:app --reload
+```
+
+**5. Run Streamlit frontend (new terminal)**
+```bash
+streamlit run app.py
+```
+
+**6. Open browser at** `http://localhost:8501`
+
+## 📁 Project Structure
+
+
+
