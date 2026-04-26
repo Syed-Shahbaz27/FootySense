@@ -74,7 +74,9 @@ streamlit run app.py
 
 FootySense/
 
-├── 1. Data Collection and SQL/
+├── 1. Data Collection and SQL
+
+
 │   ├── fetch_teams.py
 │   ├── fetch_scorers.py
 │   ├── database.py
@@ -85,6 +87,7 @@ FootySense/
 │   ├── epl_final.csv
 │   ├── prepare_ml_data.py
 │   └── train_model.py
+
 
 ├── main.py          # FastAPI backend
 ├── app.py           # Streamlit frontend
