@@ -5,7 +5,7 @@
 import streamlit as st
 import requests
 st.set_page_config(page_title="FootySense", page_icon="⚽📊")
-API_URL = "http://127.0.0.1:8000"
+API_URL = "https://footysense-api.onrender.com"
 # Title
 st.title(":green[📊⚽ FootySense: Match Predictor]")
 st.write("Predict outcomes of premier league matches using  Machine Learning")
