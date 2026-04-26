@@ -1,6 +1,6 @@
 # 📊⚽ FootySense: Premier League Match Predictor
 
-Football has been one of my primary interests growing up, I've loved watching live premier league matches, playing myself in an acadamey level, keeping this in mind  is why i made FootySense.
+Football has been one of my primary interests growing up, I've loved watching live premier league matches, I've also played in Oman at an academy level. With this in mind, I built FootySense.
 
 A full-stack Machine Learning application that leverages historical data to predict the outcomes of English Premier League matches.
 
@@ -13,15 +13,17 @@ A full-stack Machine Learning application that leverages historical data to pred
 ## 🚀 Live Demo
 [Click here to view the live app](LINK_WILL_BE_ADDED_AFTER_DEPLOYMENT)
 
-## 📸 Preview (will be added later along with deploynment)
+## 📸 Preview 
+
+**(will be added later along with deploynment)**
 
 
 ## 🧠 The Problem vs. The Solution
 ### The Problem
-Football prediction is notably difficult due to the high variance of the sport. Many sport based ML models suffer from **Data Leakage** (using end-of-game stats like "Total Yellow Cards", "Goals Scored" to predict the "Result"), which leads to artificially high accuracy (99%) that fails in real-world use cases.
+Football prediction is notably difficult due to the high variance of the sport. Many sports-based ML models suffer from **Data Leakage** (using end-of-game stats like "Total Yellow Cards", "Goals Scored" to predict the "Result"), which leads to artificially high accuracy (99%) that fails in real-world use cases.
 
 ### The Solution
-FootySense uses a **Random Forest Classifier** trained on pre-match features. FootySense uses historical averages of shots, shots on target, and corners. The API calculates team averages at inference time so users simply select two teams and receive a realistic prediction for 3 outcomes as stated: a Home Win, Away Win, or Draw.
+FootySense uses a **Random Forest Classifier** trained on pre-match features. It calculates historical averages of shots, shots on target, and corners. The API calculates team averages at inference time so users simply select two teams and receive a realistic prediction for 3 outcomes as stated: a Home Win, Away Win, or Draw.
 
 ## 🛠️ Tech Stack
 | Category | Technology |
@@ -76,20 +78,20 @@ streamlit run app.py
 
 ```text
 FootySense/
-├── 1. Data Collection and SQL/   # Scripts for API fetching and DB management
-│   ├── fetch_teams.py           # Retrieves team data from source (API KEY)
-│   ├── fetch_scorers.py         # Retrieves top scorer statistics (API KEY
-│   ├── database.py              # SQLite schema and connection logic
-│   └── analyze_data.py          # SQL queries for data insights
-├── 2. Machine Learning Model/    # Model training and data processing
-│   ├── epl_final.csv            # Processed dataset for training
-│   ├── prepare_ml_data.py       # Feature engineering and cleaning
-│   └── train_model.py           # Random Forest training script
-├── main.py                      # FastAPI backend API
-├── app.py                       # Streamlit frontend dashboard
-├── footysense.db                # Local SQLite database file
-├── model.pkl                    # Serialized Random Forest model
-└── requirements.txt             # Project dependencies
+├── 1. Data Collection and SQL/   
+│   ├── fetch_teams.py           
+│   ├── fetch_scorers.py         
+│   ├── database.py             
+│   └── analyze_data.py          
+├── 2. Machine Learning Model/    
+│   ├── epl_final.csv            
+│   ├── prepare_ml_data.py      
+│   └── train_model.py          
+├── main.py                      
+├── app.py                       
+├── footysense.db                
+├── model.pkl                    
+└── requirements.txt             
 ```
 
 
@@ -98,12 +100,11 @@ FootySense/
   
 *  **Majan University College (Oman)**
 
-
 * **Degree: BSc (Hons) Software Engineering**
 
 * **LinkedIn: https://www.linkedin.com/in/syed-shahbaz-jilani-816052253/**
 
-* **GitHub: github.com/Syed-Shahbaz27**
+* **GitHub: https://github.com/Syed-Shahbaz27**
 
 
 
