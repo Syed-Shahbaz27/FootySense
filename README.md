@@ -1,43 +1,42 @@
-📊⚽ FootySense: Premier League Match Predictor
-A full-stack Machine Learning application that predicts the outcome of Premier League football matches.
+# 📊⚽ FootySense: Premier League Match Predictor
 
-🌟 Highlights
-End-to-End ML: From raw API data to a deployed web application.
-Real Data: Trained on 9,380 historical Premier League matches.
-Live API: FastAPI backend serving predictions to a Streamlit frontend.
-Problem Solving: Solved "Data Leakage" issues to ensure model validity.
+A full-stack Machine Learning application that leverages historical data to predict the outcomes of English Premier League matches.
 
-🚀 Live Demo
-Click here to view the live app (Link will be added after deployment)
+## 🌟 Highlights
+* **End-to-End ML Pipeline:** Built a complete system from raw API data ingestion to a functional web interface.
+* **Real-World Data:** Trained on a dataset of over 9,000 historical Premier League matches.
+* **Production-Ready Backend:** Developed a FastAPI backend to serve predictions with high performance.
+* **Logic-Driven:** Addressed "Data Leakage" by ensuring the model only uses information available *before* kickoff.
 
-🧠 The Problem vs. The Solution
-The Problem:Football match prediction is notoriously difficult due to the unpredictable nature of the sport. Many models suffer from "Data Leakage" (using future data to predict the past), leading to fake high accuracy.
+## 🚀 Live Demo
+[Click here to view the live app](LINK_WILL_BE_ADDED_AFTER_DEPLOYMENT)
 
-The Solution:FootySense uses a Random Forest model trained only on data available before a match starts. By calculating rolling averages of team stats (Shots, Corners), it provides a realistic prediction probability (Win/Draw/Loss) rather than a guaranteed outcome.
+## 🧠 The Problem vs. The Solution
+### The Problem
+Football prediction is notoriously difficult due to the high variance of the sport. Many entry-level models suffer from **Data Leakage** (using end-of-game stats like "Total Yellow Cards" to predict the "Result"), which leads to artificially high accuracy that fails in real-world scenarios.
 
-🛠️ Tech Stack
-Language: Python
-Backend: FastAPI, Uvicorn
-Database: SQLite
-ML Model: Scikit-Learn (Random Forest)
-Frontend: Streamlit
-Deployment: Render
-📊 Model Performance
-Accuracy: ~52% (Realistic for football prediction. Industry standard is 50-60%).
-Data Source: Football-Data.org API.
-⚙️ Installation & Running Locally
-Clone the repo
-git clone https://github.com/Syed-Shahbaz27/FootySense.gitcd FootySense
-Install dependencies
-pip install -r requirements.txt
-Set up Environment VariablesCreate a .env file and add your API key:FOOTBALL_API_KEY=your_key_here
-Run the Backend
-uvicorn main:app --reload
-Run the Frontend (in a new terminal)
-streamlit run app.py
-📬 Author
-Syed Shahbaz Jilani
+### The Solution
+FootySense uses a **Random Forest Classifier** trained on pre-match features. The system calculates rolling averages for key metrics—such as **Shots on Target** and **Corners**—to provide realistic probability distributions for a Home Win, Away Win, or Draw.
 
-University: Majan University College, Oman
-LinkedIn: linkedin.com/in/syed-shahbaz-jilani
-GitHub: github.com/Syed-Shahbaz27
+## 🛠️ Tech Stack
+| Category | Technology |
+| :--- | :--- |
+| **Language** | Python |
+| **Backend** | FastAPI, Uvicorn |
+| **Database** | SQLite3 |
+| **ML Model** | Scikit-Learn (Random Forest) |
+| **Frontend** | Streamlit |
+| **Data Handling** | Pandas, Requests |
+| **Deployment** | Render / GitHub |
+
+## 📊 Model Performance
+* **Accuracy:** ~52% - 56% 
+* **Context:** While it might seem low, industry standards for sports betting and prediction models typically hover between 50-60%.
+* **Data Source:** Live data via the [Football-Data.org](https://www.football-data.org/) API and historical Kaggle datasets.
+
+## ⚙️ Installation & Running Locally
+
+### 1. Clone the repo
+```bash
+git clone [https://github.com/Syed-Shahbaz27/FootySense.git](https://github.com/Syed-Shahbaz27/FootySense.git)
+cd FootySense
