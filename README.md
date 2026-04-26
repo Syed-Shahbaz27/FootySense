@@ -71,16 +71,21 @@ streamlit run app.py
 **6. Open browser at** `http://localhost:8501`
 
 ## 📁 Project Structure
+
 FootySense/
+
 ├── 1. Data Collection and SQL/
 │   ├── fetch_teams.py
 │   ├── fetch_scorers.py
 │   ├── database.py
 │   └── analyze_data.py
+
 ├── 2. Machine Learning Model/
+
 │   ├── epl_final.csv
 │   ├── prepare_ml_data.py
 │   └── train_model.py
+
 ├── main.py          # FastAPI backend
 ├── app.py           # Streamlit frontend
 ├── footysense.db    # SQLite database
