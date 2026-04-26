@@ -72,28 +72,25 @@ streamlit run app.py
 
 ## 📁 Project Structure
 
+# Project Structure
+
+```text
 FootySense/
-
-├── 1. Data Collection and SQL
-
-
-│   ├── fetch_teams.py
-│   ├── fetch_scorers.py
-│   ├── database.py
-│   └── analyze_data.py
-
-├── 2. Machine Learning Model/
-
-│   ├── epl_final.csv
-│   ├── prepare_ml_data.py
-│   └── train_model.py
-
-
-├── main.py          # FastAPI backend
-├── app.py           # Streamlit frontend
-├── footysense.db    # SQLite database
-├── model.pkl        # Trained Random Forest
-└── requirements.txt
+├── 1. Data Collection and SQL/   # Scripts for API fetching and DB management
+│   ├── fetch_teams.py           # Retrieves team data from source (API KEY)
+│   ├── fetch_scorers.py         # Retrieves top scorer statistics (API KEY
+│   ├── database.py              # SQLite schema and connection logic
+│   └── analyze_data.py          # SQL queries for data insights
+├── 2. Machine Learning Model/    # Model training and data processing
+│   ├── epl_final.csv            # Processed dataset for training
+│   ├── prepare_ml_data.py       # Feature engineering and cleaning
+│   └── train_model.py           # Random Forest training script
+├── main.py                      # FastAPI backend API
+├── app.py                       # Streamlit frontend dashboard
+├── footysense.db                # Local SQLite database file
+├── model.pkl                    # Serialized Random Forest model
+└── requirements.txt             # Project dependencies
+```
 
 
 ## 📬 About the Developer
