@@ -74,3 +74,16 @@ streamlit run app.py
 
 
 
+## 📬 About the Developer
+* **Syed Shahbaz Jilani* **
+
+* **University: Majan University College (Oman)* **
+
+* **Degree: BSc (Hons) Software Engineering* **
+
+* **LinkedIn: linkedin.com/in/syed-shahbaz-jilani* **
+
+* **GitHub: github.com/Syed-Shahbaz27* **
+
+
+
