@@ -11,7 +11,7 @@ A full-stack Machine Learning application that leverages historical data to pred
 * **Logic-Driven:** Addressed "Data Leakage" by ensuring the model only uses information available *before* kickoff.
 
 ## 🚀 Live Demo
-[Click here to view the live app](LINK_WILL_BE_ADDED_AFTER_DEPLOYMENT)
+[Click here to view the live app](https://footysense-app.onrender.com/)
 
 ## 📸 Preview 
 
