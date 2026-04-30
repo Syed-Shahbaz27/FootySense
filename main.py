@@ -37,7 +37,9 @@ TEAM_NAME_MAP = {
     "West Ham United FC": "West Ham",
     "AFC Bournemouth": "Bournemouth",
     "Luton Town FC": "Luton",
-    "Sheffield United FC": "Sheffield United"
+    "Sheffield United FC": "Sheffield United",
+    "Leeds United FC": "Leeds",
+    "Sunderland AFC": "Sunderland"
 }
 
 class MatchRequest(BaseModel):

@@ -53,16 +53,24 @@ if st.button (":yellow[Predict Winner]"):
         #Call FastAPI
         payload = {"home_team":home_team,"away_team": away_team}
         res = requests.post(f"{API_URL}/predict", json=payload)
+        # 3. Predict Button (Inside the try block)
         result = res.json() 
         probs = result['probabilities']
+        
         st.markdown("### 🎲 Outcome Probabilities")
         col_a, col_b, col_c = st.columns(3)
+        
         with col_a:
-          st.metric(f"🏠 {home_team}", f"{probs.get('H', 0)}%")
+          # We change 'H' to 'Home Win' to match the backend!
+          st.metric(f"🏠 {home_team}", f"{probs.get('Home Win', 0)}%")
+        
         with col_b:
-          st.metric("🤝 Draw", f"{probs.get('D', 0)}%")
+          # We change 'D' to 'Draw'
+          st.metric("🤝 Draw", f"{probs.get('Draw', 0)}%")
+        
         with col_c:
-          st.metric(f"✈️ {away_team}", f"{probs.get('A', 0)}%")
+          # We change 'A' to 'Away Win'
+          st.metric(f"✈️ {away_team}", f"{probs.get('Away Win', 0)}%")
       except Exception as e:
        st.error("Error in connecting to the server, pls try again later.")
 
