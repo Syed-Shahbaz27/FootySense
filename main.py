@@ -1,89 +1,52 @@
-# This .py is the backend of our ML app it connects our database and model together.
-
+import pandas as pd
+import pickle
 from fastapi import FastAPI
 from pydantic import BaseModel
-import pickle 
-import pandas as pd 
-import sqlite3
 
-app = FastAPI()
+# 1. Load the model and data 
+# Error handling for startup safety
+try:
+    model = pickle.load(open("model.pkl", "rb"))
+    df = pd.read_csv("epl_final.csv")
+    print("Model and dataset loaded successfully")
+except Exception as e:
+    print("Startup failure:", e)
 
-#1. HOME ENDPOINT 
-@app.get("/")
-def home():
-    return {"message": "Our Footysense API is running!"} 
 
-# 2. TEAMS ENDPOINT 
-@app.get("/teams")
-def get_teams():
-    conn = sqlite3.connect("footysense.db")
-    cursor = conn.cursor() 
-    cursor.execute("SELECT * FROM teams")
-    result = cursor.fetchall()
-    conn.close()
-    return {"teams": result}
-
-#3. SCORERS ENDPOINT
-@app.get("/scorers")
-def get_scorers():
-    # NOTE: Ensure this path is correct.
-    conn = sqlite3.connect("footysense.db")
-    cursor = conn.cursor() 
-    cursor.execute("SELECT * FROM scorers")
-    result_1 = cursor.fetchall()
-    conn.close()
-    return {"scorers": result_1}
-
-#  4. PREDICTION SETUP
-class MatchRequest(BaseModel):
-    home_team: str
-    away_team: str
-
-# Load Model and CSV 
-model = pickle.load(open("model.pkl", "rb"))
-df = pd.read_csv("2. Machine Learning Model/epl_final.csv")
-
-#  5. PREDICT ENDPOINT 
-@app.post("/predict")
+#2. The Bridge: MAPS API names to epl_final.csv names
+TEAM_NAMES_MAP ={
+    "Arsenal FC": "Arsenal",
+    "Aston Villa FC": "Aston Villa", 
+    "Chelsea FC": "Chelsea", 
+    "Everton FC": "Everton", 
+    "Fulham FC": "Fulham", 
+    "Liverpool FC": "Liverpool", 
+    "Manchester City FC": "Man City", 
+    "Manchester United FC": "Man United", 
+    "Newcastle United FC": "Newcastle", 
+    "Tottenham Hotspur FC": "Tottenham", 
+    "Wolverhampton Wanderers FC": "Wolves", 
+    "Burnley FC": "Burnley", 
+    "Nottingham Forest FC": "Nott'm Forest", 
+    "Crystal Palace FC": "Crystal Palace", 
+    "Brighton & Hove Albion FC": "Brighton", 
+    "Brentford FC": "Brentford", 
+    "West Ham United FC": "West Ham", 
+    "AFC Bournemouth": "Bournemouth", 
+    "Luton Town FC": "Luton", 
+    "Sheffield United FC": "Sheffield United"
+}
+@app.post("/predict") 
 def predict(request: MatchRequest):
-    # A. Home Team's Average Stats (When playing at Home)
-    home_data = df[df['HomeTeam'] == request.home_team]
-    
-    avg_home_shots = home_data['HomeShots'].mean()
-    avg_home_sot = home_data['HomeShotsOnTarget'].mean()
-    avg_home_corners = home_data['HomeCorners'].mean()
+    # 1. Normalize names 
+        h_name = TEAM_NAME_MAP.get(request.home_team, request.home_team) a_name = TEAM_NAME_MAP.get(request.away_team, request.away_team)
 
-    # B. Away Team's Average Stats (When playing Away)
-    away_data = df[df['AwayTeam'] == request.away_team]
-    
-    avg_away_shots = away_data['AwayShots'].mean()
-    avg_away_sot = away_data['AwayShotsOnTarget'].mean()
-    avg_away_corners = away_data['AwayCorners'].mean()
+# Get recent form (Last 10 games)
+home_recent = df[df['HomeTeam'] == h_name]
 
-    # C. Fill missing values with 0 (if team not found)
-    # This prevents the code from crashing if a team has no history
-    values = [avg_home_shots, avg_away_shots, avg_home_sot, avg_away_sot, avg_home_corners, avg_away_corners]
-    values = [0 if v != v else v for v in values] # NaN check
 
-    # D. Create Feature List (Must match my Week 2 order)
-    # Order: HomeShots, AwayShots, HomeSOT, AwaySOT, HomeCorners, AwayCorners
-    features = [[
-        values[0], values[1], values[2], values[3], values[4], values[5]
-    ]]
+if h_name not in df["HomeTeam"].values and h_name not in df["AwayTeam"].values:
+    return {"error": f"Team '{request.home_team}' not found in dataset"}
 
-    # E. Predict
-    prediction = model.predict(features)
-    probabilities = model.predict_proba(features)[0]
-    classes = model.classes_  # ['A', 'D', 'H']
-
-    prob_dict = {}
-    for i, cls in enumerate(classes):
-        prob_dict[cls] = round(float(probabilities[i]) * 100, 1)
-
-    return {
-    "home_team": request.home_team,
-    "away_team": request.away_team,
-    "prediction": prediction[0],
-    "probabilities": prob_dict
-    }
-    
+if a_name not in df["HomeTeam"].values and a_name not in df["AwayTeam"].values:
+    return {"error": f"Team '{request.away_team}' not found in dataset"}
