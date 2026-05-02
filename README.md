@@ -42,6 +42,22 @@ FootySense uses a **Random Forest Classifier** trained on pre-match features. It
 * **Features**: HomeShots, AwayShots, ShotsOnTarget, Corners
 * **Data Source:** Live data via the [Football-Data.org](https://www.football-data.org/) API and historical Kaggle datasets.
 
+## ⚙️ Key Engineering Decisions
+
+**Data Leakage Fix:** Initial model showed 99% accuracy using 
+post-match statistics. Identified and removed target-correlated 
+features, correcting accuracy to a realistic 52%.
+
+**Inference-Time Feature Calculation:** Users select team names 
+only. API calculates historical averages at request time — no 
+in-game stats required from the user.
+
+**Team Name Normalization:** Built TEAM_NAME_MAP dictionary to 
+bridge naming mismatch between live API responses and Kaggle 
+historical dataset, resolving silent prediction failures.
+
+**Keep-Alive Architecture:** Implemented cron-job.org pings 
+every 10 minutes to bypass Render free tier inactivity limits.
 ## 🔧 Run Locally
 
 **1. Clone the repo**
