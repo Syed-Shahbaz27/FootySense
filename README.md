@@ -15,12 +15,12 @@ A full-stack Machine Learning application that leverages historical data to pred
 
 ## 📸 Preview 
 
-**(will be added later along with deploynment)**
+**<img width="1901" height="839" alt="Screenshot 2026-05-02 025812" src="https://github.com/user-attachments/assets/1bd99889-3e58-4d5e-b53b-e3236a53fd78" />**
 
 
 ## 🧠 The Problem vs. The Solution
 ### The Problem
-Football prediction is notably difficult due to the high variance of the sport. Many sports-based ML models suffer from **Data Leakage** (using end-of-game stats like "Total Yellow Cards", "Goals Scored" to predict the "Result"), which leads to artificially high accuracy (99%) that fails in real-world use cases.
+Football prediction is notably difficult due to the high variance of the sport. Many sports-based ML models suffer from **Data Leakage** (using end-of-game stats like "Goals Scored at Full Time Home / Away" to predict the "Result"), which leads to artificially high accuracy (99%) that fails in real-world use cases.
 
 ### The Solution
 FootySense uses a **Random Forest Classifier** trained on pre-match features. It calculates historical averages of shots, shots on target, and corners. The API calculates team averages at inference time so users simply select two teams and receive a realistic prediction for 3 outcomes as stated: a Home Win, Away Win, or Draw.
