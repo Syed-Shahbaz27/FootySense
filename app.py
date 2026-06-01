@@ -3,7 +3,9 @@
 
 # First import the  streamlit library
 import streamlit as st
+import time
 import requests
+time.sleep(1)  # wait 1 second to avoid rate limiting
 st.set_page_config(page_title="FootySense", page_icon="⚽📊")
 API_URL = "https://footysense-api.onrender.com"
 # Title

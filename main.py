@@ -4,9 +4,23 @@ from pydantic import BaseModel
 import pickle 
 import pandas as pd 
 import sqlite3
+from fastapi.middleware.cors import CORSMiddleware
+
+
 
 app = FastAPI()
-
+#CORS Middleware (Allow all origins for simplicity)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all domains
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+# Health endpoint
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 # --- 1. CONFIGURATION & LOADING ---
 # Ensure your file paths are correct for Render!
 try:
