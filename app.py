@@ -24,17 +24,25 @@ with st.sidebar:
   st.header("How does this work?")
   st.subheader("Select two teams to face off. The model analyzes their historical performance (shots, corners, form) to predict the match outcome probabilities.")
 
+# 1. Now we will fetch teams from backend (WITH COLD-START RETRY LOGIC)
+team_list = []
+with st.spinner("⏳ Waking up the prediction engine... Please wait up to 45 seconds for the free server."):
+    for attempt in range(5):  # Try 5 times (50 seconds total buffer)
+        try:
+            # We add a 10-second timeout so it doesn't hang infinitely
+            response = requests.get(f"{API_URL}/teams", timeout=10)
+            if response.status_code == 200:
+                teams_data = response.json()['teams']
+                # Extract names (assuming format [('Arsenal,'), ('Chelsea',)])
+                team_list = sorted([team[0] for team in teams_data])
+                break  # Success! We got the data, exit the loop.
+        except Exception:
+            time.sleep(10)  # Wait 10 seconds before trying again
 
-#1. Now we will fetch teams from backend
-try:
-  response = requests.get(f"{API_URL}/teams")
-  teams_data = response.json()['teams']
-  # Extract names (assuming format [('Arsenal,'), ('Chelsea',)])
-  team_list = sorted([team[0] for team in teams_data])
-except Exception as e:
-  # Fallback if API isn't running
-  st.error("Could not connect to backend. Is FastAPI running?")
-  st.stop()
+# Fallback if API completely fails after 50 seconds
+if not team_list:
+    st.error("Could not connect to backend. Is FastAPI running? Please refresh the page.")
+    st.stop()
 
 #2. User Input (Dropdowns)
 col1,col2 = st.columns(2)
@@ -74,9 +82,6 @@ if st.button (":yellow[Predict Winner]"):
           # We change 'A' to 'Away Win'
           st.metric(f"✈️ {away_team}", f"{probs.get('Away Win', 0)}%")
       except Exception as e:
-       st.error("Error in connecting to the server, pls try again later.")
+        st.error("Error in connecting to the server, pls try again later.")
 
 # Use #python -m streamlit run app.py to the run the streamlit app
-
-      
-      
