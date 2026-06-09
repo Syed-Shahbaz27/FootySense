@@ -33,8 +33,9 @@ with st.spinner("⏳ Waking up the prediction engine... Please wait up to 45 sec
             response = requests.get(f"{API_URL}/teams", timeout=2)
             if response.status_code == 200:
                 teams_data = response.json()['teams']
+                # Extract names (assuming format [('Arsenal,'), ('Chelsea',)])
                 team_list = sorted([team[0] for team in teams_data])
-                break  # Success! Exit the loop immediately.
+                break  # Success! We got the data, exit the loop.
         except Exception:
             time.sleep(2)  # Wait only 2 seconds before knocking on the door again
 
