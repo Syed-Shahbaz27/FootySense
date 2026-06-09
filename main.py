@@ -36,6 +36,7 @@ def load_assets():
 
 # --- 1. LIGHTWEIGHT ENDPOINTS (Instant Boot) ---
 
+# Added methods=["GET", "HEAD"] to support UptimeRobot's verification pings seamlessly
 @app.get("/health", methods=["GET", "HEAD"])
 def health():
     # This now responds in 2 milliseconds because it doesn't wait for pickle or pandas
