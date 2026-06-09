@@ -24,20 +24,20 @@ with st.sidebar:
   st.header("How does this work?")
   st.subheader("Select two teams to face off. The model analyzes their historical performance (shots, corners, form) to predict the match outcome probabilities.")
 
-# 1. Now we will fetch teams from backend (WITH COLD-START RETRY LOGIC)
+# 1. Now we will fetch teams from backend (WITH OPTIMIZED COLD-START RETRY LOGIC)
 team_list = []
 with st.spinner("⏳ Waking up the prediction engine... Please wait up to 45 seconds for the free server."):
-    for attempt in range(5):  # Try 5 times (50 seconds total buffer)
+    for attempt in range(25):  # Try 25 times over ~50 seconds
         try:
-            # We add a 10-second timeout so it doesn't hang infinitely
-            response = requests.get(f"{API_URL}/teams", timeout=10)
+            # Drop the timeout to 2 seconds so it fails fast and loops quickly
+            response = requests.get(f"{API_URL}/teams", timeout=2)
             if response.status_code == 200:
                 teams_data = response.json()['teams']
-                # Extract names (assuming format [('Arsenal,'), ('Chelsea',)])
                 team_list = sorted([team[0] for team in teams_data])
-                break  # Success! We got the data, exit the loop.
+                break  # Success! Exit the loop immediately.
         except Exception:
-            time.sleep(10)  # Wait 10 seconds before trying again
+            time.sleep(2)  # Wait only 2 seconds before knocking on the door again
+
 
 # Fallback if API completely fails after 50 seconds
 if not team_list:
