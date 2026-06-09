@@ -36,7 +36,7 @@ def load_assets():
 
 # --- 1. LIGHTWEIGHT ENDPOINTS (Instant Boot) ---
 
-@app.get("/health")
+@app.get("/health", methods=["GET", "HEAD"])
 def health():
     # This now responds in 2 milliseconds because it doesn't wait for pickle or pandas
     return {"status": "ok"}
