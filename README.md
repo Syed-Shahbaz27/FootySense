@@ -23,7 +23,7 @@ A full-stack Machine Learning application that leverages historical data to pred
 Football prediction is notably difficult due to the high variance of the sport. Many sports-based ML models suffer from **Data Leakage** (using end-of-game stats like "Goals Scored at Full Time Home / Away" to predict the "Result"), which leads to artificially high accuracy (99%) that fails in real-world use cases.
 
 ### The Solution
-FootySense uses a **Random Forest Classifier** trained on pre-match features. It calculates historical averages of shots, shots on target, and corners. The API calculates team averages at inference time so users simply select two teams and receive a realistic prediction for 3 outcomes as stated: a Home Win, Away Win, or Draw.
+FootySense uses a **Random Forest Classifier** trained on pre-match features. It calculates historical averages of shots, shots on target, and corners. The API dynamically calculates each team's recent form using their last 10 matches, ensuring predictions reflect current performance rather than 24-year historical averages.
 
 ## 🛠️ Tech Stack
 | Category | Technology |
@@ -56,9 +56,19 @@ in-game stats required from the user.
 bridge naming mismatch between live API responses and Kaggle 
 historical dataset, resolving silent prediction failures.
 
-**Keep-Alive Architecture:** Implemented cron-job.org pings 
-every 10 minutes to bypass Render free tier inactivity limits.
+**Asymmetric Keep-Alive Architecture:** Migrated from cron-job.org 
+to UptimeRobot, pinging only the backend /health endpoint every 
+5 minutes via lightweight HEAD requests. Frontend allowed to sleep 
+naturally, cutting workspace compute consumption from 48 hours/day 
+to ~25.5 hours/day and preventing a full blackout before month end.
 
+**Lazy Loading Pipeline:** ML model and dataset load only on 
+genuine prediction requests, not on health pings — keeping 
+infrastructure monitoring at near-zero compute cost.
+
+**Cold Start UX:** Frontend implements a 25-attempt polling loop 
+with 2-second timeouts, showing a loading spinner during backend 
+warm-up instead of crashing with a 503 error.
 
 ## 🔧 Run Locally
 
@@ -120,9 +130,8 @@ FootySense/
 
 * **Degree: BSc (Hons) Software Engineering**
 
-* **LinkedIn: https://www.linkedin.com/in/syed-shahbaz-jilani-816052253/**
+* **LinkedIn: https://linkedin.com/in/syed-shahbaz-jilani**
 
 * **GitHub: https://github.com/Syed-Shahbaz27**
 
-Contact me on LinkedIn, to let me know what more you want to see in Footysense, Gradually more updates will be added later. 
 
