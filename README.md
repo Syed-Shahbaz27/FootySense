@@ -73,7 +73,65 @@ The initial model produced approximately 99% accuracy due to data leakage from p
 ## 🔧 Run Locally
 
 **1. Clone the repo**
-
 ```bash
 git clone https://github.com/Syed-Shahbaz27/FootySense.git
 cd FootySense
+```
+
+**2. Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+**3. Set up environment variables**
+
+Create `.env` file in root:
+FOOTBALL_API_KEY=your_api_key_here
+
+**4. Run FastAPI backend**
+```bash
+uvicorn main:app --reload
+```
+
+**5. Run Streamlit frontend (new terminal)**
+```bash
+streamlit run app.py
+```
+
+**6. Open browser at** `http://localhost:8501`
+
+## 📁 Project Structure
+
+# Project Structure
+
+```text
+FootySense/
+├── 1. Data Collection and SQL/   
+│   ├── fetch_teams.py           
+│   ├── fetch_scorers.py         
+│   ├── database.py             
+│   └── analyze_data.py          
+├── 2. Machine Learning Model/    
+│   ├── epl_final.csv            
+│   ├── prepare_ml_data.py      
+│   └── train_model.py          
+├── main.py                      
+├── app.py                       
+├── footysense.db                
+├── model.pkl                    
+└── requirements.txt             
+```
+
+
+## 📬 About the Developer
+* **Syed Shahbaz JiLani**
+  
+*  **Majan University College (Oman)**
+
+* **Degree: BSc (Hons) Software Engineering**
+
+* **LinkedIn: https://linkedin.com/in/syed-shahbaz-jilani**
+
+* **GitHub: https://github.com/Syed-Shahbaz27**
+
+
