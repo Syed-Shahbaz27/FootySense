@@ -1,13 +1,13 @@
 # 📊⚽ FootySense: Premier League Match Predictor
 
-Football has been one of my primary interests growing up, I've loved watching live premier league matches, I've also played in Oman at an academy level. With this in mind, I built FootySense.
+Football has been one of my primary interests growing up, I've loved watching live Premier League matches, I've also played in Oman at an academy level. With this in mind, I built FootySense.
 
 A full-stack Machine Learning application that leverages historical data to predict the outcomes of English Premier League matches.
 
 ## 🌟 Highlights
 * **End-to-End ML Pipeline:** Built a complete system from raw API data ingestion to a functional web interface.
 * **Real-World Data:** Trained on a dataset of over 9,000 historical Premier League matches.
-* **Production-Ready Backend:** Developed a FastAPI backend to serve predictions with high performance.
+* **FastAPI Backend:** Developed a FastAPI backend to serve predictions and connect the web interface with the ML model and database.
 * **Logic-Driven:** Addressed "Data Leakage" by ensuring the model only uses information available *before* kickoff.
 
 ## 🚀 Live Demo
@@ -34,37 +34,36 @@ FootySense uses a **Random Forest Classifier** trained on pre-match features. It
 | **ML Model** | Scikit-Learn (Random Forest) |
 | **Frontend** | Streamlit |
 | **Data Handling** | Pandas, Requests |
-| **Deployment** | Render, Github |
+| **Deployment** | Render |
 
 ## 📊 Model Performance
-* **Accuracy:** ~52%  
-* **Context:** While it might seem low, industry standards for sports betting and prediction models typically range between 50-60%.
-* **Features**: HomeShots, AwayShots, ShotsOnTarget, Corners
+* **Accuracy:** ~52%
+* **Features:** HomeShots, AwayShots, HomeShotsOnTarget, AwayShotsOnTarget, HomeCorners, AwayCorners
 * **Data Source:** Live data via the [Football-Data.org](https://www.football-data.org/) API and historical Kaggle datasets.
 
-## ⚙️ Engineering Decisions/ Fixes I did
+## ⚙️ Engineering Decisions / Fixes I Did
 
 **Data Leakage Fix:** Initial model showed 99% accuracy using 
 post-match statistics. Identified and removed target-correlated 
 features, correcting accuracy to a realistic 52%.
 
 **Inference-Time Feature Calculation:** Users select team names 
-only. API calculates historical averages at request time  no 
-in-game stats required from the user.
+only. API calculates historical averages at request time; no 
+in-game stats are required from the user.
 
 **Team Name Normalization:** Built TEAM_NAME_MAP dictionary to 
-bridge naming mismatch between live API responses and Kaggle 
+bridge naming mismatches between live API responses and the Kaggle 
 historical dataset, resolving silent prediction failures.
 
-**Asymmetric Keep-Alive Architecture:** Migrated from cron-job.org 
-to UptimeRobot, pinging only the backend /health endpoint every 
-5 minutes via lightweight HEAD requests. Frontend allowed to sleep 
-naturally, cutting workspace compute consumption from 48 hours/day 
-to ~25.5 hours/day and preventing a full blackout before month end.
+**Asymmetric Keep-Alive Architecture:** Migrated from 
+cron-job.org to UptimeRobot, monitoring only the backend 
+`/health` endpoint every 5 minutes using lightweight GET/HEAD 
+requests. The frontend is allowed to sleep naturally, reducing 
+unnecessary backend/frontend compute usage.
 
 **Lazy Loading Pipeline:** ML model and dataset load only on 
-genuine prediction requests, not on health pings — keeping 
-infrastructure monitoring at near-zero compute cost.
+genuine prediction requests, not on health pings, keeping 
+infrastructure monitoring lightweight.
 
 **Cold Start UX:** Frontend implements a 25-attempt polling loop 
 with 2-second timeouts, showing a loading spinner during backend 
@@ -76,62 +75,3 @@ warm-up instead of crashing with a 503 error.
 ```bash
 git clone https://github.com/Syed-Shahbaz27/FootySense.git
 cd FootySense
-```
-
-**2. Install dependencies**
-```bash
-pip install -r requirements.txt
-```
-
-**3. Set up environment variables**
-
-Create `.env` file in root:
-FOOTBALL_API_KEY=your_api_key_here
-
-**4. Run FastAPI backend**
-```bash
-uvicorn main:app --reload
-```
-
-**5. Run Streamlit frontend (new terminal)**
-```bash
-streamlit run app.py
-```
-
-**6. Open browser at** `http://localhost:8501`
-
-## 📁 Project Structure
-
-# Project Structure
-
-```text
-FootySense/
-├── 1. Data Collection and SQL/   
-│   ├── fetch_teams.py           
-│   ├── fetch_scorers.py         
-│   ├── database.py             
-│   └── analyze_data.py          
-├── 2. Machine Learning Model/    
-│   ├── epl_final.csv            
-│   ├── prepare_ml_data.py      
-│   └── train_model.py          
-├── main.py                      
-├── app.py                       
-├── footysense.db                
-├── model.pkl                    
-└── requirements.txt             
-```
-
-
-## 📬 About the Developer
-* **Syed Shahbaz JiLani**
-  
-*  **Majan University College (Oman)**
-
-* **Degree: BSc (Hons) Software Engineering**
-
-* **LinkedIn: https://linkedin.com/in/syed-shahbaz-jilani**
-
-* **GitHub: https://github.com/Syed-Shahbaz27**
-
-
