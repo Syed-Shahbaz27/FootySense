@@ -173,6 +173,34 @@ with col2:
 # 6. PREDICTION
 # --------------------------------------------------
 
+@st.cache_data(ttl=3600, show_spinner=False)
+def get_prediction(home_team, away_team):
+    """
+    Ask FastAPI for a prediction.
+
+    Successful results are cached for one hour, so asking for the
+    same match again is instant. Errors are not cached, so a failed
+    request is retried the next time the button is clicked.
+    """
+
+    response = requests.post(
+        f"{API_URL}/predict",
+        json={"home_team": home_team, "away_team": away_team},
+        timeout=45
+    )
+
+    # Handle HTTP errors before reading the response
+    response.raise_for_status()
+
+    return response.json()
+
+
+# Tell visitors why the first prediction can be slow
+st.caption(
+    "⏳ Running on a free server: the first prediction can take "
+    "up to a minute while it wakes up."
+)
+
 if st.button("🔮 Predict Winner", use_container_width=True):
 
     if home_team == away_team:
@@ -181,26 +209,12 @@ if st.button("🔮 Predict Winner", use_container_width=True):
 
     else:
 
-        payload = {
-            "home_team": home_team,
-            "away_team": away_team
-        }
-
         with st.spinner("Analyzing historical statistics..."):
 
             try:
 
-                # Send the prediction request to FastAPI
-                response = requests.post(
-                    f"{API_URL}/predict",
-                    json=payload,
-                    timeout=45
-                )
-
-                # Handle HTTP errors before reading the response
-                response.raise_for_status()
-
-                result = response.json()
+                # Send the prediction request to FastAPI (cached)
+                result = get_prediction(home_team, away_team)
                 probabilities = result.get("probabilities")
 
                 if not isinstance(probabilities, dict):
