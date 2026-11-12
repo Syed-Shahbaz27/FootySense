@@ -16,7 +16,9 @@ A full-stack Machine Learning application that leverages historical data to pred
 
 ## 🚀 Live Demo
 
-[Click here to view the live app](https://footysense-app.onrender.com/)
+[Click here to view the live app](https://huggingface.co/spaces/sjhsjhfosff/footysense)
+
+*The backend runs on Render's free tier, so the first prediction after a quiet period can take up to a minute while it wakes up.*
 
 ## 📸 Preview
 
@@ -42,19 +44,19 @@ The system calculates historical averages of shots, shots on target, and corners
 | **Backend** | FastAPI, Uvicorn |
 | **Database** | SQLite |
 | **ML Model** | Scikit-Learn (Random Forest) |
-| **Frontend** | Streamlit |
+| **Frontend** | Streamlit, running in the browser via stlite (WebAssembly) |
 | **Data Handling** | Pandas, Requests |
-| **Deployment** | Render |
+| **Deployment** | Hugging Face Spaces (static frontend), Render (FastAPI backend) |
 
 ## 📊 Model Performance
 
-* **Accuracy:** ~52%
+* **Accuracy:** 51.7% on 1,802 matches from the 2020/21–2024/25 seasons, versus 43.5% for a baseline that always predicts a home win
 
-* **Features:** HomeShots, AwayShots, HomeShotsOnTarget, AwayShotsOnTarget, HomeCorners, AwayCorners
+* **Features:** the home team's average shots, shots on target and corners over its previous 10 home matches, and the away team's over its previous 10 away matches, calculated before kickoff
 
-* **Data Source:** Live data via the [Football-Data.org](https://www.football-data.org/) API and historical Kaggle datasets.
+* **Data Source:** 9,380 Premier League matches (2000/01–2024/25) from Kaggle, plus live team and top-scorer data via the [Football-Data.org](https://www.football-data.org/) API.
 
-The initial model produced approximately 99% accuracy due to data leakage from post-match statistics. After removing target-correlated features and using pre-match information, accuracy was approximately 52%.
+The initial model produced approximately 99% accuracy due to data leakage from post-match statistics. Removing the goal-based features brought it to ~52%, but the model was still trained on shots and corners from the match it was predicting. Retraining on rolling pre-match averages, and testing on later seasons than it was trained on, gives an honest 51.7%, which still beats the home-win baseline by about 8 points.
 
 ## ⚙️ Engineering Decisions / Fixes
 
@@ -64,7 +66,9 @@ The initial model produced approximately 99% accuracy due to data leakage from p
 
 **Team Name Normalization:** Built a `TEAM_NAME_MAP` dictionary to handle naming mismatches between live API responses and the historical dataset, preventing prediction failures caused by inconsistent team names.
 
-**Backend Keep-Alive Architecture:** Migrated from cron-job.org to UptimeRobot, monitoring only the backend `/health` endpoint every 5 minutes using lightweight GET/HEAD requests. The frontend is allowed to sleep naturally, reducing unnecessary compute usage.
+**Serverless Frontend:** Moved the Streamlit frontend from Render to a static Hugging Face Space using stlite, which runs the Python app in the browser via WebAssembly. The frontend no longer needs a server, so it never sleeps.
+
+**Backend Keep-Alive Architecture:** Migrated from cron-job.org to UptimeRobot, monitoring only the backend `/health` endpoint every 5 minutes using lightweight GET/HEAD requests.
 
 **Lazy Loading Pipeline:** The ML model and dataset are loaded only when a prediction request is made, rather than during health checks, keeping infrastructure monitoring lightweight.
 
@@ -102,8 +106,6 @@ streamlit run app.py
 
 ## 📁 Project Structure
 
-# Project Structure
-
 ```text
 FootySense/
 ├── 1. Data Collection and SQL/   
@@ -123,15 +125,18 @@ FootySense/
 ```
 
 
+## ⚠️ Limitations
+
+* Recent form comes from the historical dataset, which ends in May 2025, so it does not yet reflect the current season. Newly promoted teams fall back to league averages.
+* Football is high-variance. Draws are especially hard to predict, and the model rarely predicts them.
+
 ## 📬 About the Developer
-* **Syed Shahbaz JiLani**
+* **Syed Shahbaz Jilani**
   
 *  **Majan University College (Oman)**
 
-* **Degree: BSc (Hons) Software Engineering**
+* **Degree: BSc (Hons) Computing (Software Engineering)**
 
 * **LinkedIn: https://linkedin.com/in/syed-shahbaz-jilani**
 
 * **GitHub: https://github.com/Syed-Shahbaz27**
-
-
